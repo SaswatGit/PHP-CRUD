@@ -56,11 +56,25 @@ include './includes/db.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                        </tr>
+                        <?php
+                        
+                        $select_sql = "SELECT * FROM user";
+
+                        $select_query = mysqli_query($conn, $select_sql);
+
+                        while($row_data = mysqli_fetch_assoc($select_query)){
+                            $user_id = $row_data["id"];
+                            $user_name = $row_data["name"];
+                            $user_image = $row_data["image"];
+
+                            echo "<tr>
+                            <th scope='row'>'{$user_id}'</th>
+                            <td>'{$user_name}'</td>
+                            <td><img src='./images/{$user_image}' width='100' /></td>
+                        </tr>";
+                        }
+                        
+                        ?>
                     </tbody>
                 </table>
             </div>
