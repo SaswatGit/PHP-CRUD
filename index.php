@@ -15,10 +15,12 @@ include './includes/db.php';
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
+
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
+                <!-- C R E A T E -->
                 <?php
                 
                 if(isset($_POST["submit"])){
@@ -53,9 +55,27 @@ include './includes/db.php';
                             <th scope="col">Id</th>
                             <th scope="col">Name</th>
                             <th scope="col">Profile</th>
+                            <th scope="col">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- D E L E T E -->
+                        <?php
+                        
+                        if(isset($_GET["delete"])){
+                            $delete_id = $_GET["delete"];
+
+                            $delete_sql = "DELETE FROM user WHERE id = '{$delete_id}'";
+                            $delete_query = mysqli_query($conn, $delete_sql);
+
+                            if(!$delete_query){
+                                die("Can not be deleted!" . mysqli_error($delete_query));
+                            }
+                        }
+                        
+                        ?>
+
+                        <!-- R E A D -->
                         <?php
                         
                         $select_sql = "SELECT * FROM user";
@@ -71,6 +91,7 @@ include './includes/db.php';
                             <th scope='row'>'{$user_id}'</th>
                             <td>'{$user_name}'</td>
                             <td><img src='./images/{$user_image}' width='100' /></td>
+                            <td><a href='index.php?delete={$user_id}' style='text-decoration: none; color: red;'>Delete</a></td>
                         </tr>";
                         }
                         
